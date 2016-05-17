@@ -94,7 +94,16 @@ const solarPanelDeviceFields = _.map({
   hardwareVersion: 'string',
   includedSensors: 'string',
   color: 'string',
-  weather: 'text',
+  weatherSummary: 'string',
+  temperature: 'float',
+  cloudCover: 'float',
+  windSpeed: 'float',
+  precipIntensity 'int',
+  precipType 'string',
+  humidity 'float',
+  nearestStormDistance 'int',
+  sunriseTime: 'int',
+  sunsetTime: 'int',
   productionRun: 'string',
   activatedDate: 'datetime'
 }, (fieldType, name) => ({
