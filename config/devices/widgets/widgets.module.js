@@ -14,5 +14,6 @@ const widgetsModule = angular.module('concaria.widgets', [
   .component('fanControl', fanControlComponent)
   .component('fanStateControl', fanStateControlComponent)
   .component('hvacDisplay', hvacDisplayComponent)
+  .component('badgeButton', badgeButtonComponent)
 
 module.exports = widgetsModule
