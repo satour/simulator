@@ -254,7 +254,7 @@ function deviceDemoRoute ($stateProvider) {
       // get html for a widget element
       this.getHtml = (widget) => {
         const { name, position } = widget
-        return `<${name} device="demo.device" style="position: absolute; top: ${position.top}px; left: ${position.left}px"></${name}>`
+        return `<${name} device="demo.device" options="sensor.widget.options" style="position: absolute; top: ${position.top}px; left: ${position.left}px"></${name}>`
       }
 
       this.shareLink = $location.absUrl().replace(/\/demo.*/, '?navigation=0')
