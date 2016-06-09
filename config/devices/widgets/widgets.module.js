@@ -6,6 +6,7 @@ const filterComponent = require('./filter')
 const fanControlComponent = require('./fan-control')
 const fanStateControlComponent = require('./fan-state-control')
 const hvacDisplayComponent = require('./hvac-display')
+const badgeButtonComponent = require('./badge-button')
 
 const widgetsModule = angular.module('concaria.widgets', [
   commonModule
