@@ -88,7 +88,7 @@ class Device {
 
       this.connectMqtt().then(() => {
         this.subscribeMqtt('control')
-        this.startGeneratingSensorValues()
+        //this.startGeneratingSensorValues()
       })
     }
     this.connections.add(socketId)
@@ -297,15 +297,15 @@ class Device {
    * Start sensor value generation
    */
   startGeneratingSensorValues (interval) {
-    this.generateSensorValues()
-    this.interval = setInterval(this.generateSensorValues.bind(this), interval || GENERATE_SENSOR_VALUES_INTERVAL)
+    //this.generateSensorValues()
+    //this.interval = setInterval(this.generateSensorValues.bind(this), interval || GENERATE_SENSOR_VALUES_INTERVAL)
   }
 
   /**
    * Stop sensor value generation
    */
   stopGeneratingSensorValues () {
-    clearInterval(this.interval)
+    //clearInterval(this.interval)
   }
 
   simulationTick () {
