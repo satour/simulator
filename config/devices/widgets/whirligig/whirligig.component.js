@@ -1,5 +1,5 @@
 require('./whirligig.component.less')
-require('./Sprite3D')
+var Sprite3D = require('./Sprite3D')
 
 function initBox(element){
   if(!element){
@@ -26,14 +26,15 @@ function initBox(element){
   var stage = new Sprite3D(c);
   var container = new Sprite3D().setZ(0).rotateX(-20).update();
   stage.addChild(container);
+  container.setTransformOrigin(200, 200)
   
   // front left face
   container.addChild( 
     new Sprite3D()
       .setClassName("imageLeft")
-      .setTransformOrigin( 0, 0 )
-      .setPosition( -100, -250, 100 )
-      .rotateY( -45 )
+      .setTransformOrigin(100, 100)
+      .setPosition( -100, -150, 200 )
+      .rotateY( -90)
       .setRotateFirst(true)
       .update()
   );
@@ -42,9 +43,9 @@ function initBox(element){
   container.addChild( 
     new Sprite3D()
       .setClassName("imageRight")
-      .setTransformOrigin( 0, 0 )
-      .setPosition( -100, -250, 100 )
-      .rotateY( 45 )
+      .setTransformOrigin(100, 100)
+      .setPosition( -100, -150, 0)
+      .rotateY( 0)
       .setRotateFirst(true)
       .update()
   );
@@ -53,9 +54,9 @@ function initBox(element){
   container.addChild( 
     new Sprite3D()
       .setClassName("imageBackLeft")
-      .setTransformOrigin( 0, 0 )
-      .setPosition( -100, -250, 100 )
-      .rotateY( 135 )
+      .setTransformOrigin(100, 100)
+      .setPosition( -100, -150, 0)
+      .rotateY(-90)
       .setRotateFirst(true)
       .update()
   );
@@ -64,9 +65,9 @@ function initBox(element){
   container.addChild( 
     new Sprite3D()
       .setClassName("imageBackRight")
-      .setTransformOrigin( 0, 0 )
-      .setPosition( -100, -250, 100 )
-      .rotateY( -135 )
+      .setTransformOrigin(100, 100)
+      .setPosition( 100, -150, 200)
+      .rotateY(-180)
       .setRotateFirst(true)
       .update()
   );
@@ -75,10 +76,10 @@ function initBox(element){
   container.addChild( 
     new Sprite3D()
       .setClassName("imageTop")
-      .setTransformOrigin( 0, 0 )
+      .setTransformOrigin(100, 100)
       .setPosition( -100, -100, -250)
       .rotateX(-90)
-      .rotateZ(-45)
+      .rotateZ(-90)
       .setRotateFirst(true)
       .update()
   );
@@ -87,10 +88,10 @@ function initBox(element){
   container.addChild( 
     new Sprite3D()
       .setClassName("imageBottom")
-      .setTransformOrigin( 0, 0 )
+      .setTransformOrigin(-100, -100)
       .setPosition( -100, -100, -50)
       .rotateX(-90)
-      .rotateZ(-45)
+      .rotateZ(-90)
       .setRotateFirst(true)
       .update()
   );
@@ -107,6 +108,7 @@ function initBox(element){
 const whirligigComponent = {
   template: `
     <div class="whirligig">
+      <img class="whirligig-qr" />
       <p>Whirlybird</p>
     </div>
   `,
@@ -117,6 +119,11 @@ const whirligigComponent = {
   controller ($scope) {
     var t=0;
     $scope.box = initBox(document.getElementsByClassName('whirligig')[1]);
+    var qrImg = document.getElementsByClassName('whirligig-qr')[1];
+    var url = window.location.href;
+    var qrUrl = url.replace('demo?', 'demo-gyro-controller?')
+    var chartUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+encodeURIComponent(qrUrl)
+    qrImg.src = chartUrl;    // creates an <img> tag as text
 
     function move() {
       // increment the t value, used for angle calculation
@@ -138,7 +145,12 @@ const whirligigComponent = {
       this.currentVal = g;
       if($scope.box){
         $scope.box
-        .setRotation(g[0], g[1], g[2])
+        //.setRotation(g[0], g[1], g[2])
+        //.setRotation(g[0], g[2], g[1])
+        //.setRotation(g[1], g[2], g[0]) 1 right
+        //.setRotation(g[1], g[0], g[2]) same one right
+        //.setRotation(g[2], g[1], g[0])
+        .setRotation(g[2], g[0], g[1]) 
         .update();
       }
     })

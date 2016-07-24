@@ -68,7 +68,7 @@ class Device {
 
   updateSensor (name, value) {
     let message
-    if (_.isNaN(_.parseInt(value))) {
+    if (isNaN(value)) {
       message = `${Date.now()}, ${name},,${value}, \n`
     } else {
       message = `${Date.now()}, ${name}, ${value},, \n`

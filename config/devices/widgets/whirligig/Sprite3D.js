@@ -899,3 +899,6 @@ Sprite3D.isSupported = function() {
 	//console.log( "no support for CSS transforms.");
 	return false;
 };
+
+
+module.exports = Sprite3D;
