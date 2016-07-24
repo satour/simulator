@@ -128,6 +128,7 @@ function mqttFactory ($log, $q, $rootScope, CONFIG, utils) {
      * @param  {Object?} options
      */
     sendMessage (channel, payload = {}) {
+      console.log("send message called");
       let message = payload
       if (_.isObject(payload)) {
         const {
@@ -138,6 +139,7 @@ function mqttFactory ($log, $q, $rootScope, CONFIG, utils) {
         } = payload
         message = [timestamp, name, numericValue, stringValue].join(',')
       }
+
       $log.debug('MQTT#sendMessage:', channel, message)
       this.client.publish(channel, message)
     }

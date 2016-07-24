@@ -15,6 +15,7 @@ const NAMES = {
   WAREHOUSE_ORG_TEMPLATE: 'Warehouse',
   FACTORY_ORG_TEMPLATE: 'Factory',
   INDUSTRIAL_HVAC: 'Industrial HVAC',
+  WHIRLIGIG_BOX: 'Whirligig Box',
   COMMERCIAL_OPERATIONS_MANAGER: 'Operations Manager',
   COMMERCIAL_SERVICE_TECHNICIAN: 'Service Technician'
 }
@@ -22,7 +23,8 @@ const NAMES = {
 const DEVICES_PER_ORGANIZATION = {
   HOME_AIR_PUTIFIER: 3,
   INDUSTRIAL_HVAC: 10,
-  SOLAR_PANEL: 1
+  SOLAR_PANEL: 1,
+  WHIRLIGIG_BOX: 2,
 }
 
 /*
@@ -89,6 +91,16 @@ const solarPanelDeviceFields = _.map({
   deviceTemplate: NAMES.SOLAR_PANEL
 }))
 
+const whirligigDeviceFields = _.map({
+  hardwareVersion: 'string',
+  color: 'string',
+  activatedDate: 'datetime',
+}, (fieldType, name) => ({
+  name,
+  fieldType,
+  deviceTemplate: NAMES.WHIRLIGIG_BOX
+}))
+
 /*
  * device channels
  */
@@ -134,6 +146,15 @@ const solarPanelDeviceChannels = _.map({
   persistenceType,
   entityType: 'deviceTemplate',
   deviceTemplate: NAMES.SOLAR_PANEL
+}))
+
+const whirligigDeviceChannels = _.map({
+  gyro: 'simple',
+}, (persistenceType, name) => ({
+  name,
+  persistenceType,
+  entityType: 'deviceTemplate',
+  deviceTemplate: NAMES.WHIRLIGIG_BOX
 }))
 
 /*
@@ -213,6 +234,16 @@ const rawDevices = [{
       includedSensors: 'Power, Voltage, Current, Irradiance'
     })
   }
+}, {
+  name: NAMES.WHIRLIGIG_BOX,
+  count: DEVICES_PER_ORGANIZATION.WHIRLIGIG_BOX,
+  organizations: warehouseOrganizations,
+  generate: (options) => {
+    const generic = generateGenericDevice(Object.assign({ templateName: 'WHIRLIGIG_BOX' }, options || {}))
+    return _.merge(generic, {
+      includedSensors: ''
+    })
+  }
 }]
 
 /*
@@ -258,6 +289,8 @@ const config = {
     name: NAMES.INDUSTRIAL_HVAC
   }, {
     name: NAMES.SOLAR_PANEL
+  }, {
+    name: NAMES.WHIRLIGIG_BOX
   }],
   endUserTemplates: [{
     name: NAMES.HOME_USER
@@ -267,8 +300,8 @@ const config = {
     name: NAMES.COMMERCIAL_SERVICE_TECHNICIAN
   }],
   organizations: [].concat(homeOrganizations).concat(warehouseOrganizations).concat(factoryOrganizations),
-  deviceFields: [].concat(homeDeviceFields).concat(commercialDeviceFields).concat(solarPanelDeviceFields),
-  channelTemplates: [].concat(homeDeviceChannels).concat(commercialDeviceChannels).concat(solarPanelDeviceChannels),
+  deviceFields: [].concat(homeDeviceFields).concat(commercialDeviceFields).concat(solarPanelDeviceFields).concat(whirligigDeviceFields),
+  channelTemplates: [].concat(homeDeviceChannels).concat(commercialDeviceChannels).concat(solarPanelDeviceChannels).concat(whirligigDeviceChannels),
   devices: _.flattenDeep(_.map(rawDevices, (rawDevice) => {
     return _.map(rawDevice.organizations, (organization, orgIdx) => {
       return _.times(rawDevice.count, (idx) => rawDevice.generate({ idx, organization, orgIdx }))

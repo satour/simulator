@@ -69,10 +69,11 @@ class Device {
   updateSensor (name, value) {
     let message
     if (_.isNaN(_.parseInt(value))) {
-      message = value
+      message = `${Date.now()}, ${name},,${value}, \n`
     } else {
-      message = `${Date.now()}, ${name}, ${value}, , \n`
+      message = `${Date.now()}, ${name}, ${value},, \n`
     }
+
     this.handleMessage(message)
   }
 
@@ -88,7 +89,7 @@ class Device {
 
       this.connectMqtt().then(() => {
         this.subscribeMqtt('control')
-        this.startGeneratingSensorValues()
+        //this.startGeneratingSensorValues()
       })
     }
     this.connections.add(socketId)
@@ -188,7 +189,17 @@ class Device {
     const parts = message.split(',')
     const timeStamp = parts[0].trim()
     const name = parts[1].trim()
-    const sensorValue = Number(parts[2])
+    const numericValue = Number(parts[2])
+    const stringValue = parts[3]
+    var sensorValue;
+    var message; 
+    if(parts[2].trim().length < 1) {
+      sensorValue = stringValue;
+      `${timeStamp}, ${name}, , ${sensorValue}, \n`
+    }else{
+      sensorValue = numericValue;
+      message = `${timeStamp}, ${name}, ${sensorValue}, , \n`
+    }
 
     if (!this.sensors.has(name)) {
       this.addSensor(name)
@@ -200,7 +211,7 @@ class Device {
 
     return {
       channel: options.channel,
-      message: `${timeStamp}, ${name}, ${sensorValue}, , \n`
+      message: message
     }
   }
 

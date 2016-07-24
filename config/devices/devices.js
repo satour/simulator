@@ -456,6 +456,25 @@ const config = {
         }
       }
     }
+  },
+    'Whirligig Box': {
+    image: '/devices/images/blank.png',
+    width: 790,
+    widgets: ['whirligig'],
+    sensors: {
+      gyro: {
+        default:0,
+        wiggle: false,
+        unit: 'a.b.g',
+        widget: {
+          name: 'whirligig',
+          position: {
+            top: 260,
+            left: 331
+          }
+        }
+      }
+    }
   }
 }
 
