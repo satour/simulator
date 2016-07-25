@@ -117,43 +117,46 @@ const whirligigComponent = {
   controllerAs: 'whirligigControl',
   /* @ngInject */
   controller ($scope) {
-    var t=0;
-    $scope.box = initBox(document.getElementsByClassName('whirligig')[1]);
-    // var qrImg = document.getElementsByClassName('whirligig-qr')[1];
-    // var url = window.location.href;
-    // var qrUrl = url.replace('demo?', 'demo-gyro-controller?')
-    // var chartUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+encodeURIComponent(qrUrl)
-    // qrImg.src = chartUrl;    // creates an <img> tag as text
+    function setupController(){
+      var t=0;
+      $scope.box = initBox(document.getElementsByClassName('whirligig')[1]);
+      // var qrImg = document.getElementsByClassName('whirligig-qr')[1];
+      // var url = window.location.href;
+      // var qrUrl = url.replace('demo?', 'demo-gyro-controller?')
+      // var chartUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+encodeURIComponent(qrUrl)
+      // qrImg.src = chartUrl;    // creates an <img> tag as text
 
-    function move() {
-      // increment the t value, used for angle calculation
-      t += .05;
-      
-      // rotate the container around the X and Y axis, then apply these transformations
-      $scope.box
-        .rotateY( -3 )
-        .setRotationX( Math.cos(t) * 15 - 20 )
-        .update();
-    }
-
-    //setInterval( move, 1000 / 40 );
-
-    $scope.$watch(() => {
-      return this.device.sensors.gyro.stringValue
-    }, (newValue) => {
-      var g = newValue.split("_")
-      this.currentVal = g;
-      if($scope.box){
+      function move() {
+        // increment the t value, used for angle calculation
+        t += .05;
+        
+        // rotate the container around the X and Y axis, then apply these transformations
         $scope.box
-        //.setRotation(g[0], g[1], g[2])
-        //.setRotation(g[0], g[2], g[1])
-        //.setRotation(g[1], g[2], g[0]) 1 right
-        //.setRotation(g[1], g[0], g[2]) same one right
-        //.setRotation(g[2], g[1], g[0])
-        .setRotation(g[2], g[0], g[1]) 
-        .update();
+          .rotateY( -3 )
+          .setRotationX( Math.cos(t) * 15 - 20 )
+          .update();
       }
-    })
+
+      //setInterval( move, 1000 / 40 );
+
+      $scope.$watch(() => {
+        return this.device.sensors.gyro.stringValue
+      }, (newValue) => {
+        var g = newValue.split("_")
+        this.currentVal = g;
+        if($scope.box){
+          $scope.box
+          //.setRotation(g[0], g[1], g[2])
+          //.setRotation(g[0], g[2], g[1])
+          //.setRotation(g[1], g[2], g[0]) 1 right
+          //.setRotation(g[1], g[0], g[2]) same one right
+          //.setRotation(g[2], g[1], g[0])
+          .setRotation(g[2], g[0], g[1]) 
+          .update();
+        }
+      })
+    }
+    setTimeout(setupController, 2000)
   }
 }
 
