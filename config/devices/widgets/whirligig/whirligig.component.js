@@ -120,11 +120,11 @@ const whirligigComponent = {
     function setupController(){
       var t=0;
       $scope.box = initBox(document.getElementsByClassName('whirligig')[1]);
-      // var qrImg = document.getElementsByClassName('whirligig-qr')[1];
-      // var url = window.location.href;
-      // var qrUrl = url.replace('demo?', 'demo-gyro-controller?')
-      // var chartUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+encodeURIComponent(qrUrl)
-      // qrImg.src = chartUrl;    // creates an <img> tag as text
+      var qrImg = document.getElementsByClassName('whirligig-qr')[1];
+      var url = window.location.href;
+      var qrUrl = url.replace('demo?', 'demo-gyro-controller?')
+      var chartUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+encodeURIComponent(qrUrl)
+      qrImg.src = chartUrl;    // creates an <img> tag as text
 
       function move() {
         // increment the t value, used for angle calculation
@@ -144,6 +144,9 @@ const whirligigComponent = {
       }, (newValue) => {
         var g = newValue.split("_")
         this.currentVal = g;
+        console.log("new value")
+        console.log(g)
+        console.log($scope.box)
         if($scope.box){
           $scope.box
           //.setRotation(g[0], g[1], g[2])
