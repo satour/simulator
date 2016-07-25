@@ -119,11 +119,11 @@ const whirligigComponent = {
   controller ($scope) {
     var t=0;
     $scope.box = initBox(document.getElementsByClassName('whirligig')[1]);
-    var qrImg = document.getElementsByClassName('whirligig-qr')[1];
-    var url = window.location.href;
-    var qrUrl = url.replace('demo?', 'demo-gyro-controller?')
-    var chartUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+encodeURIComponent(qrUrl)
-    qrImg.src = chartUrl;    // creates an <img> tag as text
+    // var qrImg = document.getElementsByClassName('whirligig-qr')[1];
+    // var url = window.location.href;
+    // var qrUrl = url.replace('demo?', 'demo-gyro-controller?')
+    // var chartUrl = 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+encodeURIComponent(qrUrl)
+    // qrImg.src = chartUrl;    // creates an <img> tag as text
 
     function move() {
       // increment the t value, used for angle calculation
