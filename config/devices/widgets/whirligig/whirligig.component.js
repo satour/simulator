@@ -117,6 +117,7 @@ const whirligigComponent = {
   controllerAs: 'whirligigControl',
   /* @ngInject */
   controller ($scope) {
+    var widget = this;
     function setupController(){
       var t=0;
       $scope.box = initBox(document.getElementsByClassName('whirligig')[1]);
@@ -140,10 +141,9 @@ const whirligigComponent = {
       //setInterval( move, 1000 / 40 );
 
       $scope.$watch(() => {
-        return this.device.sensors.gyro.stringValue
+        return widget.device.sensors.gyro.stringValue
       }, (newValue) => {
         var g = newValue.split("_")
-        this.currentVal = g;
         console.log("new value")
         console.log(g)
         console.log($scope.box)
